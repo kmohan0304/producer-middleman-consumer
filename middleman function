@@ -1,0 +1,18 @@
+void* middleman_func(void* threadid)
+{
+int item,x;
+x=(rand()%3)+1;//* generates a random number between 1 to 3 for sleeping*//
+//* while true *//
+while(1)
+{
+item=remove_item(producer_buffer,in);//*middleman thread removes an element from producer buffer*//
+printf("Middleman thread %d removed value %d\n",pthread_self(),item);
+printf("Middleman thread %d sleeping for %d\n",pthread_self(),x);
+sleep(x);//*middleman thread sleeps for a random amount of time before inserting an element*//
+insert_item(consumer_buffer,item);//*middleman thread inserts item to consumer buffer*//
+printf("Middleman thread %d inserted value %d\n",pthread_self(),item);
+printf("Middleman thread %d sleeping for %d\n",pthread_self(),x);
+sleep(x);//*middleman thread sleeps for a random amount of time*// 
+}
+return 0;
+}
