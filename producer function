@@ -1,0 +1,19 @@
+void* producer_func(void* threadid)
+{
+int item,x;
+//* while true *//
+while(1)
+{
+x=((rand()%3)+1); //* generates a random number between 1 to 3 for sleeping*//
+printf("producer thread %d sleeping for %d seconds",pthread_self(),x);
+sleep(x); //* producer thread sleeps for a random amount of seconds after insertion *//
+item=(rand()%50)+1;//* generates a random number between 1 to 50 for inserting an item from buffers *//
+sem_wait(&full1);// *counting semaphore (here acts like wait()) for producer buffer *// 
+pthread_mutex_lock(&buffer_mutex1); // *mutex lock around the critical section for producer buffer *//
+insert_item(producer_buffer,item);//* insert item by the producer thread *//
+printf("producer thread %d  inserted value %d\n",pthread_self(),x); //*print the inserted value *// 
+pthread_mutex_unlock(&buffer_mutex1);//*mutex lock around the critical section for producer buffer unlocked *//
+sem_post(&empty1); // *counting semaphore (here acts like signal()) *// 
+}
+return 0;
+}
