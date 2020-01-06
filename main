@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<pthread.h>
+#include<semaphore.h>
+#include<stdlib.h>
+#define BUFFER_SIZE 5
+//*In order to implement threads and semaphores i have included pthread.h and semaphore.h libraries *//
+
+pthread_mutex_t buffer_mutex1;
+pthread_mutex_t buffer_mutex2;
+//* buffer_mutex1 and buffer_mutex2 are the binary semaphore or mutex locks used for the two buffers to avoid race condition *//
+
+sem_t full1,empty1,full2,empty2;
+//*full1 and empty1 are counting semaphores for producer buffer whereas full2 and empty2 are counting semaphores for consumer buffer *//
+
+int num;
+String producer_buffer[BUFFER_SIZE],consumer_buffer[BUFFER_SIZE];
+int in=0,out=0;
+//* declared the producer and consumer buffer of size BUFFER_SIZE which is 5 .in and out act like pointers to indicate the contents of the buffers *//
+
+//*initialize the buffers initially to contain empty elements*//
+for(int k=0;k<BUFFER_SIZE;k++){
+producer_buffer[k]=”empty”;
+conumer_buffer[k]=”empty”;
+}
+
+int main(int argc,char* argv[])
+{
+//*initializing the mutex locks*//
+pthread_mutex_init(&buffer_mutex1,NULL);
+pthread_mutex_init(&buffer_mutex2,NULL);
+//*initializing the counting semaphores*//
+sem_init(&full1,0,0);
+sem_init(&empty1,0,5);
+sem_init(&full2,0,0);
+sem_init(&empty2,0,5)
+int t,m,c;
+int resp,resm,resc;
+printf("Main thread beginning\n");
+printf("Enter the time of execution %d\n",threadtime);//*declare total execution time of Main*//
+
+//* declaring the number of producer,consumer and middleman threads that will be used *// 
+printf("Enter number of producer threads %d\n",num);
+printf("Enter number of consumer threads %d\n",num);
+printf("Enter number of middleman threads %d\n",num);
+
+//* declaring the threads *//
+pthread_t producer_thread[num],consumer_thread[num];
+pthread_t middleman_thread[num];
+
+for(t=0;t<num;t++)
+{
+resp=pthread_create(&producer_thread[t],NULL,producer_func,NULL);//*creating producer threads*//
+
+printf("creating producer thread with id %d \n",pthread_self());
+}
+
+for(m=0;m<num;m++)
+{
+resm=pthread_create(&middleman_thread[m],NULL,middleman_func,NULL);//*creating middleman threads*//
+
+printf("creating middleman thread with id %d \n",pthread_self());
+}
+
+for(c=0;c<num;c++)
+{
+resc=pthread_create(&consumer_thread[c],NULL,consumer_func,NULL);//*creating consumer threads*//
+
+printf("creating consumer thread with id %d \n",pthread_self());
+}
+printf(“Main thread sleeping for %d seconds \n”,threadtime);
+sleep(threadtime);//*Main thread sleeps for a certain amount of time*//
+printf(“Main thread exiting\n”);
+pthread_exit(NULL);//*Main thread exists*//
+}
