@@ -1,0 +1,22 @@
+void remove_item(int buffer[5])
+{
+int item;
+//* When the buffer is not empty remove the item and replace with empty and increment out indicating the reduced space(example,out
+of 5 empty space now 4 are available) in the buffers *//
+if(in>0)
+{
+item=buffer[in-1];
+buffer[in-1]=”empty”; 
+out++;
+}
+printf("remove_item removed item %d at position %d\n",item,in-1);//*prints the removed item*//
+for(int i=0;i<out;i++)
+{
+printf("Buffer contents are %d \t",buffer[i]);//*  prints the contents of the buffer *//
+}
+// * prints the value of in and out and the name of this queue *//
+printf(“in is %d \t”,in);
+printf(“out is %d \t”,out);
+printf(“queue is %d \t” ,buffer);
+return 0;
+}
